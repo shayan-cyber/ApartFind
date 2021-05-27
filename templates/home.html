@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+      crossorigin="anonymous"
+    />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <style>
+    body {
+      font-family: "Ubuntu", sans-serif;
+    }
+  </style>
+  <body>
+    <div class="container">
+      <br><br> <br>
+    </div>
+    <div style="height: 100vh; margin-top: 10vh; margin-bottom: 30vh;" class="container position-relative ">
+      <form
+        action="{% url 'predict' %}"
+        method="POST"
+        style="
+          padding: 2rem 2rem 2rem;
+          border-radius: 1rem;
+          background-color: #e4fbff;
+          min-width: 70vw;
+          margin-top: 2rem;
+        "
+        class="row g-3 position-absolute top-50 start-50 translate-middle"
+      >
+        {% csrf_token %}
+        <div class="col-sm-12">
+          <center>
+            <button
+              style="  margin-bottom: 2rem"
+              onclick="getLocation()"
+              class="btn btn-outline-info"
+            >
+              Get Current Location
+              <img
+                src="https://img.icons8.com/dotty/30/000000/region-code.png"
+              />
+            </button>
+          </center>
+        </div>
+
+        <div class="col-sm-6">
+          <label for="inputLat" class="form-label"
+            ><small><strong>Latitude</strong></small></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="lat"
+            id="inputLat"
+            required
+          />
+        </div>
+        <div class="col-sm-6">
+          <label for="inputLong" class="form-label"
+            ><small><strong>Longitude</strong></small></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="long"
+            id="inputLong"
+            required
+          />
+        </div>
+        <br />
+        <hr />
+        <br />
+        <div class="col-sm-6">
+          <input
+            class="form-check-input"
+            name="rera"
+            type="checkbox"
+            value="1"
+            id="defaultCheck1"
+          />
+          <label class="form-check-label" for="defaultCheck1"
+            ><strong>RERA Certified</strong></label
+          >
+        </div>
+        <div class="col-sm-6">
+          <input
+            class="form-check-input"
+            name="under_const"
+            type="checkbox"
+            value="1"
+            id="defaultCheck2"
+          />
+          <label class="form-check-label" for="defaultCheck2"
+            ><strong>Under Construction</strong></label
+          >
+        </div>
+        <div class="col-sm-6">
+          <input
+            class="form-check-input"
+            name="ready_to_move"
+            type="checkbox"
+            value="1"
+            id="defaultCheck3"
+          />
+          <label class="form-check-label" for="defaultCheck3"
+            ><strong>Ready To Move</strong></label
+          >
+        </div>
+        <div class="col-sm-6">
+          <input
+            class="form-check-input"
+            name="resale"
+            type="checkbox"
+            value="1"
+            id="defaultCheck4"
+          />
+          <label class="form-check-label" for="defaultCheck4"
+            ><strong>Resale</strong></label
+          >
+        </div>
+
+        <br /><br />
+
+        <hr />
+        <br /><br />
+        <label for="#checks"><strong>Posted By :</strong> </label>
+        <br /><br />
+        <div id="checks" class="row">
+          <div class="col-sm-4">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="type_of_seller"
+                id="exampleRadios1"
+                value="Dealer"
+                checked
+              />
+              <label class="form-check-label" for="exampleRadios1">
+                <small><strong>Dealer</strong></small>
+              </label>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="type_of_seller"
+                id="exampleRadios2"
+                value="Owner"
+              />
+              <label class="form-check-label" for="exampleRadios2">
+                <small><strong>Owner</strong></small>
+              </label>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                id="exampleRadios3"
+                name="type_of_seller"
+                value="Builder"
+              />
+              <label class="form-check-label" for="exampleRadios3">
+                <small><strong>Builder</strong></small>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <br /><br />
+
+        <hr />
+
+        <div class="col-md-4">
+          <label for="inputSqft" class="form-label"
+            ><small><strong>Total Area In Square Foot</strong></small></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="sqft"
+            id="inputSqft"
+            required
+          />
+        </div>
+
+        <div class="col-md-4">
+          <label for="inputBhk" class="form-label"
+            ><small><strong>BHK</strong></small></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="bhk"
+            id="inputBhk"
+            required
+          />
+        </div>
+        <div class="col-md-4">
+          <label for="inputBath" class="form-label"
+            ><small><strong>No. Of Bathrooms</strong></small></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="bath"
+            id="inputBath"
+            required
+          />
+        </div>
+
+        <div class="col-12 mt-5">
+          <center>
+            <button type="submit" class="btn btn-primary btn-lg">
+              Predict
+            </button>
+          </center>
+        </div>
+      </form>
+
+
+      
+    
+    </div>
+    <div class="container mt-5">
+      <hr>
+      <center><strong><small>Data Source For Training :</small></strong></center>
+
+      <center><img style="width: 200px; height: 100px;" src="https://yanirseroussi.files.wordpress.com/2014/04/kaggle-logo-transparent-300.png" alt=""></center>
+    </div>
+<br>
+
+
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Get Location -->
+    <script>
+      function getLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(myFunction);
+          console.log("Hello");
+        }
+      }
+      function myFunction(position) {
+        document.getElementById("inputLat").value = position.coords.latitude;
+        document.getElementById("inputLong").value = position.coords.longitude;
+      }
+    </script>
+  </body>
+</html>
